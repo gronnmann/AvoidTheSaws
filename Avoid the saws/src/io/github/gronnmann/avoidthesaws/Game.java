@@ -1,10 +1,12 @@
 package io.github.gronnmann.avoidthesaws;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class Game extends JPanel implements Runnable{
 	
 	private TimerTask t;
 	
+	private boolean fullScreen = false;
+	
 	public Game(int width, int height){
 		
 		playButtonWidth = width/8;
@@ -47,7 +51,7 @@ public class Game extends JPanel implements Runnable{
 		this.HEIGHT = height;
 		
 		
-		bird = new Bird(10, HEIGHT/2-35, 70, 70);
+		bird = new Bird(10, HEIGHT/2-35, height/10, height/10);
 		bird.moveY = 1;
 		
 		GameManager.addSprite(bird);
@@ -168,7 +172,44 @@ public class Game extends JPanel implements Runnable{
 		}else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			AvoidTheSaws.saveHighScore();
 			System.exit(0);
+		}else if (e.getKeyCode() == KeyEvent.VK_F11) {
+			fullScreenToggle();
+			
 		}
+	}
+	
+	public void fullScreenToggle() {
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		int w = AvoidTheSaws.DEFAULT_WIDTH;
+		int h = AvoidTheSaws.DEFAULT_HEIGHT;
+		
+		if (!fullScreen) {
+			
+			w = (int) screenSize.getWidth();
+			h = (int) screenSize.getHeight();
+			
+			AvoidTheSaws.window.setLocation(0, 0);
+		}else {
+			AvoidTheSaws.window.setLocation((w / 2 - AvoidTheSaws.DEFAULT_WIDTH/2), h / 2 - AvoidTheSaws.DEFAULT_HEIGHT/2);
+		}
+		
+		this.WIDTH = w;
+		this.HEIGHT = h;
+		
+		AvoidTheSaws.WIDTH = w;
+		AvoidTheSaws.HEIGHT = h;
+		
+		AvoidTheSaws.window.setSize(w, h);
+		
+		background = new ImageIcon("res/sky.png").getImage().getScaledInstance(w, h, Image.SCALE_FAST);
+		playButton = new ImageIcon("res/play.png").getImage().getScaledInstance(playButtonWidth, playButtonWidth, Image.SCALE_FAST);
+		bird.width = h/10;
+		bird.height = h/10;
+		bird.rescale();
+		
+		fullScreen = !fullScreen;
 	}
 	
 	public void keyPressed(KeyEvent e){

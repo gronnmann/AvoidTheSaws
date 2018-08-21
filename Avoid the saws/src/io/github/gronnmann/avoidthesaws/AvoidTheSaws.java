@@ -15,19 +15,26 @@ import javax.swing.JFrame;
 public class AvoidTheSaws {
 	
 	
-	private static JFrame window;
+	protected static JFrame window;
 	
 	public static Game game;
 	
 	private static Thread gameThread;
 	
-	public static int WIDTH = 1300, HEIGHT = 700;
+	public static int WIDTH = 1300, HEIGHT = 700, DEFAULT_WIDTH = 1300, DEFAULT_HEIGHT = 700;
 	
 	public static int highScore = 0;
 	
 	private static File highscoreFile;
 	
 	public static void main(String[] args){
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		/*WIDTH = (int) screenSize.getWidth();
+		HEIGHT = (int) screenSize.getHeight();*/
+		
+		
 		game = new Game(WIDTH, HEIGHT);
 		
 		gameThread = new Thread(game);
@@ -51,7 +58,7 @@ public class AvoidTheSaws {
 		
 		window.setVisible(true);
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
 		
 		window.setLocation((int) screenSize.getWidth() / 2 - WIDTH/2, (int) screenSize.getHeight() / 2 - HEIGHT/2);	
 		

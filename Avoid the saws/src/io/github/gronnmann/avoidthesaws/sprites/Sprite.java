@@ -10,6 +10,7 @@ public class Sprite {
 	public int x, y;
 	public int width, height;
 	protected Image img;
+	private String imgN;
 	
 	protected boolean deadly = false;
 	
@@ -20,8 +21,13 @@ public class Sprite {
 		this.height = height;
 		this.img = new ImageIcon("res/" + img + ".png").getImage();
 		this.img = this.img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		this.imgN = img;
 	}
 	
+	public void rescale() {
+		this.img = new ImageIcon("res/" + imgN + ".png").getImage();
+		this.img = this.img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+	}
 	
 	public Image getImage(){
 		return img;
