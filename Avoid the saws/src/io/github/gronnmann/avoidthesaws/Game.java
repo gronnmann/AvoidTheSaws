@@ -34,7 +34,7 @@ public class Game extends JPanel implements Runnable{
 	
 	private TimerTask t;
 	
-	private boolean fullScreen = false;
+	private boolean fullScreen = false, showHitbox = false;
 	
 	public Game(int width, int height){
 		
@@ -78,7 +78,7 @@ public class Game extends JPanel implements Runnable{
 		
 		g.drawImage(background, 0, 0, this);
 		 
-		for (Sprite s : GameManager.getSprites()){
+		for (Sprite s : (ArrayList<Sprite>)GameManager.getSprites().clone()){
 			
 			
 			if (s instanceof SpriteRotatable) {
@@ -96,11 +96,24 @@ public class Game extends JPanel implements Runnable{
 				
 				g.setTransform(rotateBackup);
 				
-				continue;
+			}else{
+				g.drawImage(s.getImage(), s.getX(), s.getY(), this);
 			}
 			
-			
-			g.drawImage(s.getImage(), s.getX(), s.getY(), this);
+			if (showHitbox){
+				if (s.isDeadly()){
+					g.setColor(Color.RED);
+				}else{
+					g.setColor(Color.BLACK);
+				}
+				
+				if (s.collidesWithAnother()){
+					g.setColor(Color.YELLOW);
+				}
+				
+				
+				g.drawRect(s.x, s.y, (int)s.getBounds().getSize().getWidth(), (int)s.getBounds().getSize().getHeight());
+			}
 		}
 		
 		g.setColor(Color.YELLOW);
@@ -175,6 +188,9 @@ public class Game extends JPanel implements Runnable{
 		}else if (e.getKeyCode() == KeyEvent.VK_F11) {
 			fullScreenToggle();
 			
+		}else if (e.getKeyCode() == KeyEvent.VK_F3) {
+			
+			showHitbox = !showHitbox;
 		}
 	}
 	
@@ -192,7 +208,7 @@ public class Game extends JPanel implements Runnable{
 			
 			AvoidTheSaws.window.setLocation(0, 0);
 		}else {
-			AvoidTheSaws.window.setLocation((w / 2 - AvoidTheSaws.DEFAULT_WIDTH/2), h / 2 - AvoidTheSaws.DEFAULT_HEIGHT/2);
+			AvoidTheSaws.window.setLocation(((int)screenSize.getWidth() / 2 - AvoidTheSaws.DEFAULT_WIDTH/2), (int)screenSize.getHeight() / 2 - AvoidTheSaws.DEFAULT_HEIGHT/2);
 		}
 		
 		this.WIDTH = w;

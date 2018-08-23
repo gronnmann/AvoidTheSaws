@@ -5,6 +5,8 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
+import io.github.gronnmann.avoidthesaws.GameManager;
+
 public class Sprite {
 	public int moveX = 0, moveY = 0;
 	public int x, y;
@@ -55,4 +57,21 @@ public class Sprite {
 	public boolean isDeadly() {
 		return deadly;
 	}
+	
+	public boolean collidesWithAnother(){
+		for (Sprite s : GameManager.getSprites()){
+			if (s != this){
+				if (s.getBounds().intersects(this.getBounds()))return true;
+			}
+		}
+		return false;
+	}
+	
+	/*public static boolean collidesWithSprite(int x, int y){
+		for (Sprite s : GameManager.getSprites()){
+			if (s.getBounds().intersects(new Rectangle(x-1, y-1, 1, 1)))return true;
+			System.out.println("Collides: " + s);
+		}
+		return false;
+	}*/
 }

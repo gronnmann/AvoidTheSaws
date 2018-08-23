@@ -119,16 +119,22 @@ public class GameManager {
 		int posX = r.nextInt(AvoidTheSaws.WIDTH);
 		int posY = r.nextInt(AvoidTheSaws.HEIGHT);
 		
+		/*while (Sprite.collidesWithSprite(posX, posY)){
+			posX = r.nextInt(AvoidTheSaws.WIDTH);
+			posY = r.nextInt(AvoidTheSaws.HEIGHT);
+		}*/
+		
+		
 		while (posX < AvoidTheSaws.WIDTH/10) {
 			posX = r.nextInt(AvoidTheSaws.WIDTH);
 		}
 		
-		while (posX < AvoidTheSaws.WIDTH/5 && AvoidTheSaws.HEIGHT/2+140 > posY && posY > AvoidTheSaws.HEIGHT/2-140) {
+		while (posX < AvoidTheSaws.WIDTH/5  && AvoidTheSaws.HEIGHT/2+AvoidTheSaws.HEIGHT/3 > posY && posY > AvoidTheSaws.HEIGHT/2-AvoidTheSaws.HEIGHT/3) {
 			posY = r.nextInt(AvoidTheSaws.HEIGHT);
 		}
 		
 		
-		int size = (r.nextInt(2)+1)*AvoidTheSaws.HEIGHT/11;
+		int size = (r.nextInt(2)+1)*AvoidTheSaws.HEIGHT/12;
 		
 		Saw saw = new Saw(posX, posY, size, size);
 		

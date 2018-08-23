@@ -1,8 +1,7 @@
 package io.github.gronnmann.avoidthesaws.sprites;
 
-import io.github.gronnmann.avoidthesaws.GameManager;
 import io.github.gronnmann.avoidthesaws.AvoidTheSaws;
-import io.github.gronnmann.avoidthesaws.Game;
+import io.github.gronnmann.avoidthesaws.GameManager;
 
 public class Bird extends Sprite{
 
@@ -11,23 +10,25 @@ public class Bird extends Sprite{
 	}
 	
 	
-	int jumpStrenghtY = -AvoidTheSaws.HEIGHT/14;
+	int jumpStrenghtY = -50;
 	
 	int jumpStrenghtX = 0;
+	
+	int moveXDef = 3;
 	
 	public void update(){
 		super.update();
 
 		
 		if (jumpStrenghtX > 0){
-			jumpStrenghtX--;
+			//jumpStrenghtX--;
 			
-			moveX = 3;
+			moveX = moveXDef;
 		}else{
 			moveX = 0;
 		}
 		
-		if (jumpStrenghtY != -AvoidTheSaws.HEIGHT/14){
+		if (jumpStrenghtY != -50){
 			jumpStrenghtY--;
 			
 			
@@ -37,6 +38,11 @@ public class Bird extends Sprite{
 		}
 		
 		
+	}
+	
+	public void rescale(){
+		super.rescale();
+		moveXDef = AvoidTheSaws.WIDTH/(AvoidTheSaws.DEFAULT_WIDTH/3);
 	}
 	
 	public void processMovement(){
@@ -63,7 +69,7 @@ public class Bird extends Sprite{
 	}
 	
 	public void jump(){
-		jumpStrenghtY = AvoidTheSaws.HEIGHT/20;
+		jumpStrenghtY = 35;
 		jumpStrenghtX = (int) (AvoidTheSaws.WIDTH/18.57);
 	}
 	

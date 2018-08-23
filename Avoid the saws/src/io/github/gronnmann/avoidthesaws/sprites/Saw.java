@@ -6,7 +6,7 @@ public class Saw extends SpriteRotatable{
 
 	
 	public Saw(int x, int y, int width, int height) {
-		super(x, y, width, height, "saw");
+		super(x, y, width, height, "saw", false, 5);
 		deadly = true;
 	}
 	
